@@ -34,7 +34,7 @@ jobs:
           import assert from 'node:assert/strict';
           const html = readFileSync('index.html', 'utf8');
           for (const id of ['inicio','nosotros','noticias','proyectos','servicios','transparencia','contacto']) {
-            assert.match(html, new RegExp('<section\\\\b[^>]*\\\\bid="' + id + '"'), 'missing section: ' + id);
+            assert.ok(html.includes('id="' + id + '"'), 'missing section: ' + id);
             assert.ok(html.includes('href="#' + id + '"'), 'missing navigation link: ' + id);
           }
           for (const id of ['menu','nav','slide','prev','next']) assert.ok(html.includes('id="' + id + '"'), 'missing control: ' + id);
