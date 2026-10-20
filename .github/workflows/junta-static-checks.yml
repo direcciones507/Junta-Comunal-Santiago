@@ -1,0 +1,43 @@
+name: Junta Comunal - Static Site Checks
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'styles.css'
+      - 'app.js'
+      - '.github/workflows/junta-static-checks.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Check required site files
+        run: |
+          test -s index.html
+          test -s styles.css
+          test -s app.js
+      - name: Check JavaScript syntax
+        run: node --check app.js
+      - name: Check seven navigation destinations and carousel controls
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          import assert from 'node:assert/strict';
+          const html = readFileSync('index.html', 'utf8');
+          for (const id of ['inicio','nosotros','noticias','proyectos','servicios','transparencia','contacto']) {
+            assert.ok(html.includes('id="' + id + '"'), 'missing section: ' + id);
+            assert.ok(html.includes('href="#' + id + '"'), 'missing navigation link: ' + id);
+          }
+          for (const id of ['menu','nav','slide','prev','next']) assert.ok(html.includes('id="' + id + '"'), 'missing control: ' + id);
+          for (const page of [0,1,2]) assert.ok(html.includes('data-page="' + page + '"'), 'missing carousel page: ' + page);
+          console.log('PASS seven sections, navigation anchors, and carousel control structure');
+          NODE
