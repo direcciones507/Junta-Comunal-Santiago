@@ -76,5 +76,5 @@ globalThis.jcsCarousel = items => {
 };
 
 // A shared publication link opens its full content, including on initial navigation.
-function openLinkedNews(){if(location.hash==='#curso-sistemas-fotovoltaicos'){const publication=document.getElementById('curso-sistemas-fotovoltaicos');const full=publication?.querySelector('details');if(full)full.open=true;}}
+function openLinkedNews(){if(['#curso-sistemas-fotovoltaicos','#apoyo-ayuda-sona'].includes(location.hash)){const publication=document.getElementById(location.hash.slice(1));const full=publication?.querySelector('details');if(full)full.open=true;}}
 if(typeof location!=='undefined'){openLinkedNews();window.addEventListener('hashchange',openLinkedNews);}
