@@ -1,4 +1,5 @@
 (async()=>{
+ if(document.documentElement.dataset.preview==='static')return;
  try {
   const response=await fetch('/api/public');if(!response.ok)return;
   const {items}=await response.json();

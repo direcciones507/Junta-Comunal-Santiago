@@ -1,0 +1,4 @@
+document.getElementById('login-form').onsubmit=async event=>{
+ event.preventDefault();const button=document.getElementById('login-button'),status=document.getElementById('login-status');button.disabled=true;status.textContent='Verificando acceso…';
+ try{const response=await fetch('/auth/login',{method:'POST',headers:{'Content-Type':'application/json','X-JCS-Request':'1'},body:JSON.stringify({email:document.getElementById('email').value,password:document.getElementById('password').value})});const value=await response.json();if(!response.ok)throw new Error(response.status===503||response.status===404?'El acceso institucional está pendiente de configuración en el servidor.':value.error||'No se pudo iniciar sesión.');location.assign('/admin');}catch(error){status.textContent=error.message;}finally{document.getElementById('password').value='';button.disabled=false;}
+};

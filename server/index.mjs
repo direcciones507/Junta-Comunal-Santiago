@@ -50,9 +50,11 @@ function audit(db,id,action,actor,data) {return statement(db,'INSERT INTO audit 
 async function admin(req,env) {
  // Sites dispatch authenticates these headers and strips visitor-supplied identity headers.
  // Any other deployment must use an authenticating gateway; fail closed without explicit configuration.
- if(env.AUTH_PROVIDER!=='sites'||!env.ADMIN_EMAIL)fail(503,'Identidad administrativa sin configurar.');
- const subject=req.headers.get('oai-authenticated-user-id');
- const email=req.headers.get('oai-authenticated-user-email');
+ let principal=null;
+ if(env.AUTH_PROVIDER==='institution'&&typeof env.AUTHENTICATOR==='function')principal=await env.AUTHENTICATOR(req);
+ else if(env.AUTH_PROVIDER==='sites'&&env.ADMIN_EMAIL)principal={subject:req.headers.get('oai-authenticated-user-id'),email:req.headers.get('oai-authenticated-user-email')};
+ else fail(503,'Identidad administrativa sin configurar.');
+ const subject=principal?.subject,email=principal?.email;
  if(!subject||!email)fail(401,'Inicia sesión para continuar.');
  if(email.toLowerCase()!==env.ADMIN_EMAIL.toLowerCase())fail(403,'Acceso reservado al administrador.');
  await statement(env.DB,'INSERT OR IGNORE INTO administrator (slot,subject,email) VALUES (1,?,?)',subject,email).run();
@@ -67,6 +69,7 @@ async function api(req,env,url) {
   const rows=await all(env.DB,"SELECT live FROM contents WHERE live IS NOT NULL AND status!='archived'");
   return json({items:rows.map(r=>JSON.parse(r.live))});
  }
+ if(path==='/api/auth-config'&&req.method==='GET')return json(env.AUTH_PROVIDER==='sites'?{signIn:'/signin-with-chatgpt?returnTo=%2Fadmin',signOut:'/signout-with-chatgpt?returnTo=%2Fadmin',logoutMethod:'GET'}:{signIn:'/login',signOut:'/auth/logout',logoutMethod:'POST'});
  const a=await admin(req,env);
  if(req.method!=='GET') {
   if(req.headers.get('origin')!==url.origin||req.headers.get('x-jcs-request')!=='1')fail(403,'Origen de solicitud no permitido.');
@@ -147,9 +150,9 @@ export function createHandler(assets) {return async(req,env)=>{
    const file=await env.BUCKET.get(id);if(!file)fail(404,'No disponible.');
    response=new Response(file.body,{headers:{'Content-Type':file.httpMetadata.contentType,'Content-Disposition':file.httpMetadata.contentType==='application/pdf'?'attachment; filename="documento-institucional.pdf"':'inline'}});
   } else {
-   const route=url.pathname==='/admin'||url.pathname==='/admin/'?'/admin/index.html':url.pathname==='/'?'/index.html':url.pathname;
+   const route=url.pathname==='/login'?'/admin/login.html':url.pathname==='/admin'||url.pathname==='/admin/'?'/admin/index.html':url.pathname==='/'?'/index.html':url.pathname;
    const asset=assets[route];if(!asset)fail(404,'No encontrado.');
-   response=new Response(asset.body,{headers:{'Content-Type':asset.type}});
+   response=new Response(asset.encoding==='base64'?Uint8Array.from(atob(asset.body),c=>c.charCodeAt(0)):asset.body,{headers:{'Content-Type':asset.type}});
   }
  }catch(e){response=json({error:e instanceof HttpError?e.message:'No se pudo completar la operación.'},e.status||500);}
  const headers=new Headers(response.headers);

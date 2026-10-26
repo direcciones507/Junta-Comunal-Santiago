@@ -7,3 +7,6 @@ export const contents = sqliteTable('contents', {
 }, table => [uniqueIndex('active_section_unique').on(table.slot).where(sql`${table.status} != 'archived'`)]);
 export const media = sqliteTable('media', { id: text().primaryKey(), mime: text().notNull(), size: integer().notNull(), created: text().notNull(), author: text().notNull() });
 export const audit = sqliteTable('audit', { id: text().primaryKey(), content: text().notNull(), action: text().notNull(), actor: text().notNull(), at: text().notNull(), snapshot: text().notNull() });
+
+export const adminSessions=sqliteTable('admin_sessions',{token_hash:text().primaryKey(),subject:text().notNull(),expires:integer().notNull()});
+export const loginAttempts=sqliteTable('login_attempts',{slot:integer().primaryKey(),started:integer().notNull(),count:integer().notNull()});
