@@ -1,0 +1,1 @@
+{"name":"junta-santiago-admin","private":true,"type":"module","scripts":{"dev":"node scripts/dev.mjs","build":"node scripts/build.mjs","test":"node --test tests/admin.test.mjs","db:generate":"drizzle-kit generate"},"devDependencies":{"drizzle-kit":"0.31.8","drizzle-orm":"0.45.1"}}
