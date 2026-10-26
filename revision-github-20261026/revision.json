@@ -1,9 +1,9 @@
 {
-  "source_commit": "04f61141ebad261a0f17dcc0252f6c215212bd1a",
+  "source_commit": "19f3d0a6949b5d3611843b2d3fb233b29c721e49",
   "preview_only": true,
   "admin_mode": "static-readonly",
   "checksums": {
-    "index.html": "66e6ffdfbc8cfe34e55c732a0954eed3c828fa450dce1cc21b0fed5c0ad88dd5",
+    "index.html": "5374698351481df7fc454be581fcb44bbc0850ec926a0f538cc96584ba6454a1",
     "styles.css": "20aeb29a65b00fc10a6cc998d4a2cc568156452798648fb5b741b8962cfd8609",
     "app.js": "9ce2ee4f80a2d379236ac5b8242e5bde7fee4a72be957c724a04aa9e40d68e41",
     "public-content.js": "f2c92b4682e48a831f07b1b4798e9c84431b0acf362e632a4ed925b78ce40f49",
@@ -12,7 +12,7 @@
     "assets/curso-sistemas-fotovoltaicos-inadeh.png": "8d28459a84c1f0016a4c1d78b89cb87da30ae17e55daf2ead80acafcd22fa63d",
     "assets/apoyo-ayuda-sona-01.jpg": "8b91dd70118c606bf3ab2c5ebe23a6d15b67eb57dcb29f618ad37f118363b01e",
     "assets/apoyo-ayuda-sona-02.jpg": "52bed2f668c52d1c1e9a6750634ad589312a18313ccfb3e88df3c9bc0d2a055d",
-    "admin/index.html": "2ae5e9956e621d96e51c849d42c054fe692abd1cbb0cddcce33d38db9ea57839",
+    "admin/index.html": "244ff699e9ac53edfd2adc8e788496b6d6c3ead45a52f4f145d644ea558222bd",
     "admin/admin.css": "65d3dd7d97998ea549dd5bd71677ddf790c740ddfe64069a5a876b86fb7dc0c0",
     "admin/preview.js": "71630af618acb84130f548a2c62c637cf4fb278cd661be0b5b787d705fc5eb9c"
   }
