@@ -18,62 +18,55 @@ document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && nav.classList.contains('open')) closeMenu(true);
 });
 matchMedia('(min-width: 761px)').addEventListener('change', () => closeMenu());
-let page = 0;
-let labels = [
-  'Fotografía institucional pendiente de aprobación',
-  'Fotografía de la comunidad pendiente de aprobación',
-  'Fotografía de servicios pendiente de aprobación'
+// Featured approved image first; keep the three existing review slides.
+const featuredSlide={title:'Mantenimiento de Áreas Verdes',src:'assets/carrusel-mantenimiento-areas-verdes.png',alt:'Mantenimiento de áreas verdes de la Junta Comunal de Santiago, con trabajadores y vehículos',body:''};
+const originalSlides=[
+ {title:'Fotografía institucional pendiente de aprobación'},
+ {title:'Fotografía de la comunidad pendiente de aprobación'},
+ {title:'Fotografía de servicios pendiente de aprobación'}
 ];
-function show(index) {
-  page = (index + labels.length) % labels.length;
-  document.querySelector('#slide-title').textContent = labels[page];
-  document.querySelector('#slide-count').textContent = `${page + 1} de ${labels.length}`;
-  document.querySelectorAll('[data-page]').forEach(button => {
-    const active = Number(button.dataset.page) === page;
-    button.setAttribute('aria-current', String(active));
-    button.setAttribute('aria-label', `Diapositiva ${Number(button.dataset.page) + 1}${active ? ', actual' : ''}`);
-  });
+let slides=[featuredSlide,...originalSlides],page=0,timer=null;
+const carousel=document.querySelector('.carousel');
+const slide=document.querySelector('#slide');
+const photo=document.querySelector('#carousel-photo');
+const caption=document.querySelector('#slide-description');
+const symbol=document.querySelector('.photo-symbol');
+const controls=document.querySelector('.controls');
+const pauseButton=document.querySelector('#carousel-pause');
+const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
+let paused=reducedMotion.matches;
+function stopRotation(){if(timer!==null){clearInterval(timer);timer=null;}}
+function updateRotationControl(){pauseButton.textContent=paused?'Reanudar carrusel':'Pausar carrusel';pauseButton.setAttribute('aria-label',pauseButton.textContent);slide.setAttribute('aria-live',paused?'polite':'off');}
+function startRotation(){stopRotation();if(!paused&&!document.hidden&&slides.length>1)timer=setInterval(()=>show(page+1),7000);}
+function pauseRotation(){paused=true;stopRotation();updateRotationControl();}
+function show(index){
+ page=(index+slides.length)%slides.length;const item=slides[page];
+ photo.hidden=!item.src;symbol.hidden=!!item.src;
+ if(item.src){photo.src=item.src;photo.alt=item.alt||item.title;}
+ caption.textContent=item.body||'';caption.hidden=!item.body;
+ document.querySelector('#slide-title').textContent=item.title;
+ document.querySelector('#slide-count').textContent=`${page+1} de ${slides.length}`;
+ slide.classList.toggle('placeholder-slide',!item.src);
+ document.querySelectorAll('[data-page]').forEach(button=>{const active=Number(button.dataset.page)===page;button.setAttribute('aria-current',String(active));button.setAttribute('aria-label',`Diapositiva ${Number(button.dataset.page)+1}${active?', actual':''}`);});
 }
-document.querySelector('#prev').addEventListener('click', () => show(page - 1));
-document.querySelector('#next').addEventListener('click', () => show(page + 1));
-document.querySelectorAll('[data-page]').forEach(button => {
-  button.addEventListener('click', () => show(Number(button.dataset.page)));
-});
-document.querySelector('.carousel').addEventListener('keydown', event => {
-  if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-    event.preventDefault();
-    show(page + (event.key === 'ArrowRight' ? 1 : -1));
-  }
-});
-show(0);
-
-// Keep the approved carousel controls while loading only published snapshots.
-globalThis.jcsCarousel = items => {
-  if (!items.length) return;
-  labels = items.map(item => item.title);
-  const slide = document.querySelector('#slide');
-  const photo = document.createElement('img');
-  photo.id = 'carousel-photo';
-  slide.prepend(photo);
-  const caption = document.createElement('p');
-  caption.id = 'slide-description';
-  slide.append(caption);
-  const symbol = slide.querySelector('.photo-symbol');
-  if (symbol) symbol.hidden = true;
-  const controls = document.querySelector('.controls');
-  controls.querySelectorAll('[data-page]').forEach(button => button.remove());
-  items.forEach((item, index) => {
-    const button = document.createElement('button');
-    button.dataset.page = String(index);
-    button.textContent = String(index + 1);
-    button.addEventListener('click', () => show(index));
-    controls.insertBefore(button, document.querySelector('#next'));
-  });
-  const updatePhoto = () => { photo.src = '/media/' + items[page].image; photo.alt = items[page].alt; caption.textContent = items[page].body; caption.hidden = !items[page].body; };
-  const originalShow = show;
-  show = index => { originalShow(index); updatePhoto(); };
-  show(0);
-};
+function manualShow(index){pauseRotation();show(index);}
+function rebuildPages(){
+ controls.querySelectorAll('[data-page]').forEach(button=>button.remove());
+ slides.forEach((item,index)=>{const button=document.createElement('button');button.dataset.page=String(index);button.textContent=String(index+1);button.addEventListener('click',()=>manualShow(index));controls.insertBefore(button,document.querySelector('#next'));});
+}
+document.querySelector('#prev').addEventListener('click',()=>manualShow(page-1));
+document.querySelector('#next').addEventListener('click',()=>manualShow(page+1));
+carousel.addEventListener('keydown',event=>{if(event.key==='ArrowLeft'||event.key==='ArrowRight'){event.preventDefault();manualShow(page+(event.key==='ArrowRight'?1:-1));}});
+pauseButton.addEventListener('click',()=>{paused=!paused;updateRotationControl();if(paused)stopRotation();else startRotation();});
+carousel.addEventListener('mouseenter',stopRotation);
+carousel.addEventListener('mouseleave',()=>{if(!carousel.contains(document.activeElement))startRotation();});
+carousel.addEventListener('focusin',stopRotation);
+carousel.addEventListener('focusout',event=>{if(!carousel.contains(event.relatedTarget))startRotation();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopRotation();else if(!carousel.contains(document.activeElement))startRotation();});
+reducedMotion.addEventListener('change',event=>{if(event.matches)pauseRotation();});
+// Published administrative slides are retained after the featured image; no panel changes.
+globalThis.jcsCarousel=items=>{if(!items.length)return;slides=[featuredSlide,...items.map(item=>({title:item.title,src:'/media/'+item.image,alt:item.alt,body:item.body}))];rebuildPages();show(0);startRotation();};
+rebuildPages();show(0);updateRotationControl();startRotation();
 
 // A shared publication link opens its full content, including on initial navigation.
 function openLinkedNews(){if(['#curso-sistemas-fotovoltaicos','#apoyo-ayuda-sona'].includes(location.hash)){const publication=document.getElementById(location.hash.slice(1));const full=publication?.querySelector('details');if(full)full.open=true;}}
