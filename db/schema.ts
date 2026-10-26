@@ -1,0 +1,12 @@
+import { sql } from 'drizzle-orm';
+import { sqliteTable, text, integer, uniqueIndex } from 'drizzle-orm/sqlite-core';
+export const administrator = sqliteTable('administrator', { slot: integer().primaryKey(), subject: text().notNull().unique(), email: text().notNull() });
+export const contents = sqliteTable('contents', {
+ id: text().primaryKey(), kind: text().notNull(), slot: text(), title: text().notNull(), body: text().notNull(), image: text(), alt: text().notNull(), position: integer().notNull(),
+ details: text().notNull().default('{}'), status: text().notNull(), version: integer().notNull(), live: text(), updated: text().notNull(), author: text().notNull()
+}, table => [uniqueIndex('active_section_unique').on(table.slot).where(sql`${table.status} != 'archived'`)]);
+export const media = sqliteTable('media', { id: text().primaryKey(), mime: text().notNull(), size: integer().notNull(), created: text().notNull(), author: text().notNull() });
+export const audit = sqliteTable('audit', { id: text().primaryKey(), content: text().notNull(), action: text().notNull(), actor: text().notNull(), at: text().notNull(), snapshot: text().notNull() });
+
+export const adminSessions=sqliteTable('admin_sessions',{token_hash:text().primaryKey(),subject:text().notNull(),expires:integer().notNull()});
+export const loginAttempts=sqliteTable('login_attempts',{slot:integer().primaryKey(),started:integer().notNull(),count:integer().notNull()});

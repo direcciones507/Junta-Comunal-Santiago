@@ -1,0 +1,1 @@
+ALTER TABLE `contents` ADD `details` text DEFAULT '{}' NOT NULL;

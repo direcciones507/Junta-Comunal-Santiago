@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX `active_section_unique` ON `contents` (`slot`) WHERE "contents"."status" != 'archived';
