@@ -19,7 +19,7 @@ document.addEventListener('keydown', event => {
 });
 matchMedia('(min-width: 761px)').addEventListener('change', () => closeMenu());
 let page = 0;
-const labels = [
+let labels = [
   'Fotografía institucional pendiente de aprobación',
   'Fotografía de la comunidad pendiente de aprobación',
   'Fotografía de servicios pendiente de aprobación'
@@ -46,3 +46,28 @@ document.querySelector('.carousel').addEventListener('keydown', event => {
   }
 });
 show(0);
+
+// Keep the approved carousel controls while loading only published snapshots.
+globalThis.jcsCarousel = items => {
+  if (!items.length) return;
+  labels = items.map(item => item.title);
+  const slide = document.querySelector('#slide');
+  const photo = document.createElement('img');
+  photo.id = 'carousel-photo';
+  slide.prepend(photo);
+  const symbol = slide.querySelector('.photo-symbol');
+  if (symbol) symbol.hidden = true;
+  const controls = document.querySelector('.controls');
+  controls.querySelectorAll('[data-page]').forEach(button => button.remove());
+  items.forEach((item, index) => {
+    const button = document.createElement('button');
+    button.dataset.page = String(index);
+    button.textContent = String(index + 1);
+    button.addEventListener('click', () => show(index));
+    controls.insertBefore(button, document.querySelector('#next'));
+  });
+  const updatePhoto = () => { photo.src = '/media/' + items[page].image; photo.alt = items[page].alt; };
+  const originalShow = show;
+  show = index => { originalShow(index); updatePhoto(); };
+  show(0);
+};

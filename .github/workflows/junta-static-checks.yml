@@ -5,6 +5,14 @@ on:
       - 'index.html'
       - 'styles.css'
       - 'app.js'
+      - 'admin/**'
+      - 'server/**'
+      - 'scripts/**'
+      - 'db/**'
+      - 'drizzle/**'
+      - 'tests/**'
+      - 'public-content.js'
+      - 'package*.json'
       - '.github/workflows/junta-static-checks.yml'
   workflow_dispatch:
 permissions:
@@ -41,3 +49,11 @@ jobs:
           for (const page of [0,1,2]) assert.ok(html.includes('data-page="' + page + '"'), 'missing carousel page: ' + page);
           console.log('PASS seven sections, navigation anchors, and carousel control structure');
           NODE
+      - name: Install locked development dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Test authentication, approval and private data boundaries
+        run: npm test
+      - name: Test existing navigation and carousel
+        run: node tests/interaction-check.cjs
+      - name: Build the private review artifact
+        run: npm run build
