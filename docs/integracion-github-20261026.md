@@ -52,3 +52,16 @@ El resultado de la publicación se documentará en el PR con el commit exacto de
 ## Nube gubernamental pendiente
 
 Consultar `servidor-institucional.md`: identidad/cuenta institucional, infraestructura HTTPS autorizada, motor de base de datos, almacenamiento privado de objetos, migración revisada y respaldo/restauración. No se ejecutó ninguna transferencia de datos reales ni se configuró infraestructura productiva.
+
+## Resultado verificado de publicación
+
+- Código fuente integrado en GitHub: `1da2ad1df12537a82e0dc5890893d9beed54e9e3`, rama `investigacion-institucional-20261026`, PR #5 en borrador contra `main`.
+- Vista nueva: https://direcciones507.github.io/Junta-Comunal-Santiago/revision-github-20261026/
+- Demostración administrativa: https://direcciones507.github.io/Junta-Comunal-Santiago/revision-github-20261026/admin/
+- Manifestación verificable de versión y huellas: https://direcciones507.github.io/Junta-Comunal-Santiago/revision-github-20261026/revision.json
+- Commit que publica únicamente la subcarpeta de revisión en la rama de Pages existente: `8fdeba4afbd9a6634d56c1b831306d84cb4342ca`. No reemplaza el index anterior ni modifica main.
+- Ejecución [Pages 40389290582](https://github.com/direcciones507/Junta-Comunal-Santiago/actions/runs/40389290582): SUCCESS. HTTP 200 y navegador real confirmaron logo, ficha de parques, fuentes y demostración administrativa.
+- Se descargaron los nueve archivos del manifiesto (incluidos ambos PNG y la demostración del panel); sus SHA256 coincidieron con la exportación del commit fuente. El árbol de fuente de GitHub se comprobó recursivamente: 53 archivos, sin truncamiento, incluidos servidor, autenticador, migraciones y assets. La documentación de cierre puede añadir archivos posteriores sin cambiar el código de esa vista.
+- CI general de GitHub: [ejecución 40389171551](https://github.com/direcciones507/Junta-Comunal-Santiago/actions/runs/40389171551) falló **antes de ejecutar pasos**, con anotación visible «The job was not started because your account is locked due to a billing issue». No se modificó facturación, no se contrataron runners ni se reintentó repetidamente. Esto se distingue de las trece pruebas locales aprobadas y del despliegue Pages exitoso.
+
+La integración y vista GitHub están disponibles. La activación del panel operativo en la nube institucional sigue pendiente de infraestructura y credenciales autorizadas; GitHub Pages solo muestra su demostración visual. No se fusionaron los PR, no se trasladaron datos reales y no se publicó un dominio institucional definitivo.
