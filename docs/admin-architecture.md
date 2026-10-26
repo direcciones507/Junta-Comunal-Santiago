@@ -38,3 +38,6 @@ Conservar el despliegue estático anterior de la vista privada (versión 1) y ve
 
 ## Desarrollo
 Node 24. `npm ci`; `npm test`; `node tests/interaction-check.cjs`; `npm run build`. `npm run db:generate` genera migraciones desde `db/schema.ts`; revisar el SQL antes de publicar. `npm run dev` sirve la web y adaptador local sin fabricar identidad; para sesión real utilizar el enlace privado. Nunca subir `.data`, `.env` o node_modules.
+
+## Ampliación institucional del 26-10-2026
+La rama `investigacion-institucional-20261026` agrega proyectos, documentos PDF, galerías y detalles de contacto/logo en una columna JSON `details`, con migración aditiva `0002_red_sumo.sql`. Se conserva toda la autorización y las transiciones anteriores. Ver el informe de investigación para límites de PDF, respaldo de objetos, aprobación de contenidos y portabilidad. Estas funciones necesitan desplegar esta rama en la vista de revisión y validar el recorrido de interfaz; no confundir pruebas locales con activación institucional.

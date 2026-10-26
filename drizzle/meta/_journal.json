@@ -15,6 +15,13 @@
       "when": 1792991687509,
       "tag": "0001_left_bill_hollister",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1793041844855,
+      "tag": "0002_red_sumo",
+      "breakpoints": true
     }
   ]
 }
