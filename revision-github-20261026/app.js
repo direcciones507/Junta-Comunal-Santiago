@@ -74,3 +74,7 @@ globalThis.jcsCarousel = items => {
   show = index => { originalShow(index); updatePhoto(); };
   show(0);
 };
+
+// A shared publication link opens its full content, including on initial navigation.
+function openLinkedNews(){if(location.hash==='#curso-sistemas-fotovoltaicos'){const publication=document.getElementById('curso-sistemas-fotovoltaicos');const full=publication?.querySelector('details');if(full)full.open=true;}}
+if(typeof location!=='undefined'){openLinkedNews();window.addEventListener('hashchange',openLinkedNews);}

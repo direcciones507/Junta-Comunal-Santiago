@@ -1,14 +1,15 @@
 {
-  "source_commit": "1da2ad1df12537a82e0dc5890893d9beed54e9e3",
+  "source_commit": "abc17116cffb1b133d35a94c971db1810b4fbcdf",
   "preview_only": true,
   "admin_mode": "static-readonly",
   "checksums": {
-    "index.html": "593df630ab6a5bace1f354263cac1e6044e0bc018bf3d37443e98f017fab736e",
-    "styles.css": "cf39ce10b4cf8eecf896e35dfb95e0e15218eb7e0bc5ccc049604db9d0ef72c6",
-    "app.js": "88840ddfaa0595356e8a93e7bef421980316e0c61f74e370ccbbfe5e91ec1a3b",
+    "index.html": "6c717ee4e654bf751664150df3275cd51334803b0a7bf3f24f6384af6c6ce3d3",
+    "styles.css": "15081796091ee9fcc79b82b20164a9f33636b2044577c6a0784ef6a3c25fcfac",
+    "app.js": "77c494683a5e488995bdff855697654f83860c9cd256364d4d8684eecb867330",
     "public-content.js": "f2c92b4682e48a831f07b1b4798e9c84431b0acf362e632a4ed925b78ce40f49",
     "assets/logo-institucional.png": "bb93cb8f5797609edce61bebb911a4e0d90cc98354d851eb9a3704e316f78d9c",
     "assets/parques-comunitarios.png": "60fdfcfb358e2c0f40ae73d546d35650ce7e093b64e13a243f3c1a9625e2fc8d",
+    "assets/curso-sistemas-fotovoltaicos-inadeh.png": "8d28459a84c1f0016a4c1d78b89cb87da30ae17e55daf2ead80acafcd22fa63d",
     "admin/index.html": "2ae5e9956e621d96e51c849d42c054fe692abd1cbb0cddcce33d38db9ea57839",
     "admin/admin.css": "65d3dd7d97998ea549dd5bd71677ddf790c740ddfe64069a5a876b86fb7dc0c0",
     "admin/preview.js": "71630af618acb84130f548a2c62c637cf4fb278cd661be0b5b787d705fc5eb9c"
