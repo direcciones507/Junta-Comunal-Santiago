@@ -96,6 +96,6 @@ Exportación JSON incluye los nuevos detalles y metadatos; no incluye bytes de P
 
 ## Revisión y entrega
 
-Se preparará un PR en borrador sobre la rama del PR #4 para aislar el cambio institucional de la implementación anterior. El PR #3 y el #4 permanecen sin fusionar. GitHub Pages y el dominio institucional no deben modificarse.
+Los cambios están en el [PR #5 en borrador](https://github.com/direcciones507/Junta-Comunal-Santiago/pull/5), sobre la rama del PR #4, para aislar el cambio institucional de la implementación anterior. El PR #3 y el #4 permanecen sin fusionar. GitHub Pages y el dominio institucional no deben modificarse.
 
-Validación local: diez pruebas de integración de servidor aprobadas, incluyendo aprobación, acceso privado de documentos, metadatos de proyectos y validación de contacto. Menú/carrusel existentes verificados por simulación DOM. La prueba física en Android sigue pendiente. Los resultados de vista previa y publicación de revisión se registran en `revision-20261026.md`.
+Validación local: diez pruebas de integración de servidor aprobadas, incluyendo aprobación, acceso privado de documentos, metadatos de proyectos y validación de contacto. Menú/carrusel existentes verificados por simulación DOM. La prueba física en Android sigue pendiente. La vista privada existente se actualizó y se verificó el guardado de un borrador de proyecto. Los resultados y límites se registran en [revision-20261026.md](revision-20261026.md).
