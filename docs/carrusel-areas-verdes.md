@@ -11,3 +11,11 @@ Verificación: trece pruebas del servidor PASS; simulación DOM de carrusel/menu
 Las otras seis secciones y el menú son idénticos a la base. No se cambia el panel ni se fusiona PR. La vista se exporta desde el commit registrado en `revision.json` a la subcarpeta de revisión GitHub Pages, conservando la raíz anterior.
 
 SHA256 de la imagen original y del archivo incorporado: `b4faa4c21bf01d875ed1fb968e45cef1009b94b1d3b400c7123ea2c8d86d5f8c`.
+
+## Publicación verificada
+
+Fuente: `0e30c8720b9953ab4f7f51199b611cfe6a7f22d1`. Commit de la vista: `86d8c950fe14caa7bcf7f916f636b010ed822b01`. Pages 40402175961 SUCCESS.
+
+Enlace: https://direcciones507.github.io/Junta-Comunal-Santiago/revision-github-20261026/#inicio
+
+El manifiesto publicado corresponde al commit fuente; HTML, JavaScript, CSS e imagen coinciden por SHA256. Navegador confirmó primera diapositiva, imagen natural 1536×807 renderizada a 1174×616.80 px, sin recortes. Evidencia: `carrusel-areas-verdes-publicado.jpg`. La comprobación general de Actions sigue afectada por el bloqueo de facturación ya documentado; no se modificó facturación. No confundir ese bloqueo con las pruebas locales aprobadas ni con la publicación Pages exitosa.
