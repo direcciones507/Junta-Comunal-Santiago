@@ -55,6 +55,9 @@ globalThis.jcsCarousel = items => {
   const photo = document.createElement('img');
   photo.id = 'carousel-photo';
   slide.prepend(photo);
+  const caption = document.createElement('p');
+  caption.id = 'slide-description';
+  slide.append(caption);
   const symbol = slide.querySelector('.photo-symbol');
   if (symbol) symbol.hidden = true;
   const controls = document.querySelector('.controls');
@@ -66,7 +69,7 @@ globalThis.jcsCarousel = items => {
     button.addEventListener('click', () => show(index));
     controls.insertBefore(button, document.querySelector('#next'));
   });
-  const updatePhoto = () => { photo.src = '/media/' + items[page].image; photo.alt = items[page].alt; };
+  const updatePhoto = () => { photo.src = '/media/' + items[page].image; photo.alt = items[page].alt; caption.textContent = items[page].body; caption.hidden = !items[page].body; };
   const originalShow = show;
   show = index => { originalShow(index); updatePhoto(); };
   show(0);
