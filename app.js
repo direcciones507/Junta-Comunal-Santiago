@@ -1,0 +1,48 @@
+document.documentElement.classList.add('js');
+const nav = document.querySelector('#nav');
+const menu = document.querySelector('#menu');
+function closeMenu(returnFocus = false) {
+  nav.classList.remove('open');
+  menu.setAttribute('aria-expanded', 'false');
+  if (returnFocus) menu.focus();
+}
+menu.addEventListener('click', () => {
+  const open = menu.getAttribute('aria-expanded') !== 'true';
+  menu.setAttribute('aria-expanded', String(open));
+  nav.classList.toggle('open', open);
+});
+nav.addEventListener('click', event => {
+  if (event.target.closest('a')) closeMenu();
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && nav.classList.contains('open')) closeMenu(true);
+});
+matchMedia('(min-width: 761px)').addEventListener('change', () => closeMenu());
+let page = 0;
+const labels = [
+  'Fotografía institucional pendiente de aprobación',
+  'Fotografía de la comunidad pendiente de aprobación',
+  'Fotografía de servicios pendiente de aprobación'
+];
+function show(index) {
+  page = (index + labels.length) % labels.length;
+  document.querySelector('#slide-title').textContent = labels[page];
+  document.querySelector('#slide-count').textContent = `${page + 1} de ${labels.length}`;
+  document.querySelectorAll('[data-page]').forEach(button => {
+    const active = Number(button.dataset.page) === page;
+    button.setAttribute('aria-current', String(active));
+    button.setAttribute('aria-label', `Diapositiva ${Number(button.dataset.page) + 1}${active ? ', actual' : ''}`);
+  });
+}
+document.querySelector('#prev').addEventListener('click', () => show(page - 1));
+document.querySelector('#next').addEventListener('click', () => show(page + 1));
+document.querySelectorAll('[data-page]').forEach(button => {
+  button.addEventListener('click', () => show(Number(button.dataset.page)));
+});
+document.querySelector('.carousel').addEventListener('keydown', event => {
+  if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+    event.preventDefault();
+    show(page + (event.key === 'ArrowRight' ? 1 : -1));
+  }
+});
+show(0);
