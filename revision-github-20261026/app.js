@@ -25,7 +25,8 @@ const originalSlides=[
  {title:'Fotografía de la comunidad pendiente de aprobación'},
  {title:'Fotografía de servicios pendiente de aprobación'}
 ];
-let slides=[featuredSlide,...originalSlides],page=0,timer=null;
+const reviewActivitySlide={"title": "Curso de Puntadas Típicas · Entrega de certificados", "src": "assets/curso-puntadas-tipicas-certificados.jpg", "alt": "Collage original de entrega de certificados del curso de Puntadas Típicas, con participantes y representantes institucionales.", "body": "Conoce esta actividad de capacitación para mujeres de la comunidad.", "newsId": "puntadas-tipicas-20261002"};
+let slides=[featuredSlide,reviewActivitySlide,...originalSlides],page=0,timer=null;
 const carousel=document.querySelector('.carousel');
 const slide=document.querySelector('#slide');
 const photo=document.querySelector('#carousel-photo');
@@ -42,6 +43,7 @@ function pauseRotation(){paused=true;stopRotation();updateRotationControl();}
 function show(index){
  page=(index+slides.length)%slides.length;const item=slides[page];
  photo.hidden=!item.src;symbol.hidden=!!item.src;
+ const link=document.querySelector('#carousel-link');if(link){link.hidden=!item.src;if(item.newsId)link.setAttribute('href','#publicacion-'+item.newsId);else link.removeAttribute('href');}
  if(item.src){photo.src=item.src;photo.alt=item.alt||item.title;}
  caption.textContent=item.body||'';caption.hidden=!item.body;
  document.querySelector('#slide-title').textContent=item.title;
