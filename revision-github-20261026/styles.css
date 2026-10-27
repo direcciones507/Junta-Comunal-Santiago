@@ -25,3 +25,20 @@ header,main,footer{max-width:1240px;margin:auto;padding:24px 32px}header{display
 
 /* Two activity additions only: full original pictures and accessible news link. */
 #carousel-link{display:block;width:100%}#carousel-link[hidden]{display:none}#news-list time{display:block;color:var(--gold);font-size:.85rem;margin:8px 0}
+
+/* Review layout: preserve DOM/publication order and avoid fixed-height card rows. */
+.grid{grid-template-columns:minmax(0,1fr);gap:24px}
+.grid>section{min-width:0}
+#noticias,#proyectos{grid-column:1/-1;width:100%;min-width:0}
+#noticias{columns:2;column-gap:24px}
+#noticias>span,#noticias>h2,#noticias>p{column-span:all}
+#noticias>p{max-width:90ch;margin-bottom:24px}
+#news-list{display:contents}
+#noticias .institutional-news,#noticias .publication{display:flow-root;break-inside:avoid;page-break-inside:avoid;width:100%;max-width:none;margin:0 0 24px;border:1px solid var(--line);border-top:4px solid #f0c52c;border-radius:12px;background:#fff;overflow:hidden}
+#noticias .publication{padding:20px}
+#noticias .publication h3,#noticias .institutional-news h3{font-size:1.2rem;line-height:1.4;overflow-wrap:anywhere}
+#noticias .publication p{max-width:none}
+#noticias .institutional-news>img,#noticias .publication img{width:100%;max-width:100%;height:auto;max-height:none;object-fit:contain}
+#noticias .news-full summary{min-height:44px;align-content:center}
+#proyectos .community-project{max-width:none}
+@media(max-width:1100px){#noticias{columns:1}#noticias .institutional-news,#noticias .publication{max-width:760px;margin-left:auto;margin-right:auto}}
