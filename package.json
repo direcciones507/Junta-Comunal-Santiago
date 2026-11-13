@@ -1,0 +1,11 @@
+{
+  "name": "junta-comunal-motion-preview",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node preview/server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
